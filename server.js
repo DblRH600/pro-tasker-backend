@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 import db from './config/connection.js'
 import userRouter from './routes/users.js'
 import projectRouter from './routes/projects.js'
+import taskRouter from './routes/tasks.js'
 
 dotenv.config()
 
@@ -16,6 +17,7 @@ app.use(express.json())
 // ============ Routes ================ //
 app.use('/api/users', userRouter)
 app.use('/api/projects', projectRouter)
+app.use('/api/tasks', taskRouter)
 
 // ===== Test Initial Connection Route ==== //
 let isConnected = false
