@@ -1,6 +1,7 @@
 import User from '../models/User.js'
 import { signToken } from '../utils/auth.js'
 
+// create new user acc
 export const registerUser = async (req, res) => {
   try {
     const user = await User.create(req.body)
@@ -12,6 +13,7 @@ export const registerUser = async (req, res) => {
   }
 }
 
+// allows user to login
 export const loginUser = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email })
@@ -35,6 +37,7 @@ export const loginUser = async (req, res) => {
   }
 }
 
+// helps with admin control
 export const adminDashboard = async (req, res) => {
   try {
     const admin = await User.findById(req.user._id)
@@ -45,9 +48,10 @@ export const adminDashboard = async (req, res) => {
   }
 }
 
+// delete user
 export const deleteUser = async (req, res) => {
   try {
-    
+
     const deleteUser = await User.findByIdAndDelete(req.params.id)
 
     if (!deleteUser) {
