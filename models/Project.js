@@ -21,7 +21,6 @@ const projectSchema = new Schema({
   }],
   projectDueDate: {
     type: Date,
-    required: true
   },
   createdAt: {
     type: Date,

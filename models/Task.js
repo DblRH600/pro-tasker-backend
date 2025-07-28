@@ -25,7 +25,6 @@ const taskSchema = new Schema({
   },
   taskDueDate: {
     type: Date,
-    required: true
   },
   createdAt: {
     type: Date,

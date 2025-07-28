@@ -1,6 +1,7 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import db from './config/connection.js'
+import userRouter from './routes/users.js'
 
 dotenv.config()
 
@@ -12,11 +13,12 @@ app.use(express.urlencoded({ extend: true }))
 app.use(express.json())
 
 // ============ Routes ================ //
+app.use('/api/users', userRouter)
 
 // ===== Test Initial Connection Route ==== //
 let isConnected = false
 app.get('/', (req, res) => {
-  if (isConnected) {
+  if (!isConnected) {
     return res.json({ message: 'Successful Connection!' })
   } else {
     return res.status(500).json({ message: 'Failed to connect to DB!' })
