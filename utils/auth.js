@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 
 const secret = process.env.JWT_SECRET
-const expiration = '4h'
+const expiration = '12h'
 
 export function authMiddleware (req, res, next) {
   let token = req.body?.token || req.query?.token || req.headers?.authorization
