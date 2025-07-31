@@ -3,6 +3,7 @@ import Project from '../models/Project.js'
 
 // create a new task to add to project
 export const createTask = async (req, res) => {
+  console.log("==> Incoming request to createTask")
   try {
     const project = await Project.findById(req.params.projectId)
 
@@ -19,9 +20,9 @@ export const createTask = async (req, res) => {
     const task = await Task.create({
       title: req.body.title,
       description: req.body.description,
-      status: req.body.status || 'To Do',
+      user: req.user._id,
       project: project._id,
-      user: req.user._id
+      status: req.body.status || 'To Do',
     })
 
     console.log('Created Task', task)
@@ -37,7 +38,13 @@ export const createTask = async (req, res) => {
 // update task information
 export const updateTask = async (req, res) => {
   try {
-    const taskUpdate = await Task.findById(req.params.taskId).populate(
+    const taskUpdate = await Task.findById(req.params.taskId, {
+      title:req.body.title,
+      description:req.body.description,
+      taskDueDate:req.body.taskDueDate,
+      status: req.body.status,
+      // project: req.body.project,
+    },{new: true}).populate(
       'project'
     )
 

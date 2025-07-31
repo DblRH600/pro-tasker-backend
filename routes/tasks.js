@@ -17,7 +17,7 @@ router.use(protect)
  * POST api/projects/:projectId/tasks
  * @description task creation route
  */
-router.post('/projects/:projectId/tasks', createTask)
+router.post('/:projectId/tasks', createTask)
 
 /**
  * PUT api/tasks/:taskId
@@ -29,7 +29,7 @@ router.put('/tasks/:taskId', updateTask)
  * GET api/projects/:projectId/task
  * @description route to retrieve tasks by project id
  */
-router.get('/projects/:projectId/tasks', getTasksByProject)
+router.get('/:projectId/tasks', getTasksByProject)
 
 /**
  * DELETE api/tasks/:taskId
