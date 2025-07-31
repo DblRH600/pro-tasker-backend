@@ -22,10 +22,16 @@ router.post('/register', registerUser)
 router.post('/login', loginUser)
 
 /**
- * GET api/users/dashboard
+ * GET api/users/dashboard-admin
  * @description admin route, will have access to pro-tasker dashboard
  */
 router.get('/dashboard', adminOnly, adminDashboard)
+
+/**
+ * GET api/users/:id
+ * @description user route for individual dashboards
+ */
+router.get('/:id', userDashboard)
 
 /**
  * PUT api/users/:id

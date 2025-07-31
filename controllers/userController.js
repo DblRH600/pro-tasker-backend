@@ -1,4 +1,6 @@
+import Task from '../models/Task.js'
 import User from '../models/User.js'
+import Project from '../models/Project.js'
 import { signToken } from '../utils/auth.js'
 
 // create new user acc
@@ -48,10 +50,25 @@ export const adminDashboard = async (req, res) => {
   }
 }
 
+// get user by id
+export const userDashboard = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id).select({ passowrd: 0 })
+
+    if (!user) return res.status(404).json({ message: 'User not found' })
+
+    const projects = await Project.find({ owner: user._id })
+    const tasks = await Task.find({ owner: user._id })
+    res.status(200).json({ user, projects, tasks })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: error.message })
+  }
+}
+
 // delete user
 export const deleteUser = async (req, res) => {
   try {
-
     const deleteUser = await User.findByIdAndDelete(req.params.id)
 
     if (!deleteUser) {
