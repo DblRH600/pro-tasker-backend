@@ -4,7 +4,8 @@ import {
   registerUser,
   loginUser,
   deleteUser,
-  adminDashboard
+  adminDashboard,
+  userDashboard
 } from '../controllers/userController.js'
 
 const router = express.Router()
