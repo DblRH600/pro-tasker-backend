@@ -4,8 +4,11 @@ import Project from '../models/Project.js'
 export const createProject = async (req, res) => {
   try {
     const project = await Project.create({
-      ...req.body,
-      user: req.user._id
+      name:req.body.name,
+      description: req.body.description,
+      user: req.user._id,
+      projectDueDate: req.body.projectDueDate,
+      status: req.body.status,
     })
     res.status(201).json(project)
   } catch (error) {
@@ -44,6 +47,8 @@ export const updateProject = async (req, res) => {
 export const getAllProjects = async (req, res) => {
   try {
     const projects = await Project.find({ user: req.user._id })
+      .populate('user', 'username')
+      .populate('tasks')
     res.json(projects)
   } catch (error) {
     console.error(error)

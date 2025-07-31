@@ -22,6 +22,11 @@ const projectSchema = new Schema({
   projectDueDate: {
     type: Date,
   },
+  status: {
+    type: String,
+    enum: ['Discovery', 'In Progress', 'Completed'],
+    default: 'Discovery'
+  },
   createdAt: {
     type: Date,
     default: Date.now
