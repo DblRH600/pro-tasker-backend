@@ -7,6 +7,7 @@ import {
   adminDashboard,
   userDashboard
 } from '../controllers/userController.js'
+import { authMiddleware } from '../utils/auth.js'
 
 const router = express.Router()
 
@@ -32,7 +33,7 @@ router.get('/dashboard', adminOnly, adminDashboard)
  * GET api/users/:id
  * @description user route for individual dashboards
  */
-router.get('/:id', userDashboard)
+router.get('/me/landing', userDashboard)
 
 /**
  * PUT api/users/:id

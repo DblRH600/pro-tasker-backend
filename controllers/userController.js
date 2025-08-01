@@ -53,13 +53,21 @@ export const adminDashboard = async (req, res) => {
 // get user by id
 export const userDashboard = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id).select({ passowrd: 0 })
+    const user = await User.findById(req.user.id).select('-password')
+    console.log('Found User: ', user)
 
+    // const correctPw = await user.isCorrectPassword(req.body.password)
+
+    // if (!correctPw) {
+    //   return res.status(400).json({ message: error.message })
+    // }
     if (!user) return res.status(404).json({ message: 'User not found' })
 
     const projects = await Project.find({ owner: user._id })
     const tasks = await Task.find({ owner: user._id })
-    res.status(200).json({ user, projects, tasks })
+
+    const token = signToken(user)
+    res.json({ token, user, projects, tasks })
   } catch (error) {
     console.error(error)
     res.status(500).json({ message: error.message })
