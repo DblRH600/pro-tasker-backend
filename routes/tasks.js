@@ -23,7 +23,7 @@ router.post('/:projectId/tasks', createTask)
  * PUT api/tasks/:taskId
  * @description route to update task by id
  */
-router.put('/tasks/:taskId', updateTask)
+router.put('/:taskId', updateTask)
 
 /**
  * GET api/projects/:projectId/task
@@ -35,7 +35,7 @@ router.get('/:projectId/tasks', getTasksByProject)
  * DELETE api/tasks/:taskId
  * @description route to delete tasks
  */
-router.delete('/tasks/:taskId', deleteTask)
+router.delete('/:taskId', deleteTask)
 
 
 export default router

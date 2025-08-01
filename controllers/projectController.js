@@ -4,11 +4,11 @@ import Project from '../models/Project.js'
 export const createProject = async (req, res) => {
   try {
     const project = await Project.create({
-      name:req.body.name,
+      name: req.body.name,
       description: req.body.description,
       user: req.user._id,
       projectDueDate: req.body.projectDueDate,
-      status: req.body.status,
+      status: req.body.status
     })
     res.status(201).json(project)
   } catch (error) {
@@ -20,7 +20,7 @@ export const createProject = async (req, res) => {
 // update project information
 export const updateProject = async (req, res) => {
   try {
-    const projectUpdate = await Project.findById(req.params.id, { new: true })
+    const projectUpdate = await Project.findById(req.params.id)
 
     if (!projectUpdate) {
       return res
@@ -34,9 +34,15 @@ export const updateProject = async (req, res) => {
         .json({ message: 'Updates to this project are authorized by the user' })
     }
 
-    await projectUpdate.set(req.body).save()
+    // apply updates to project
+    projectUpdate.name = req.body.name
+    projectUpdate.description = req.body.description
+    projectUpdate.projectDueDate = req.body.projectDueDate
+    projectUpdate.status = req.body.status
 
-    res.json(projectUpdate)
+    const updated = await projectUpdate.save()
+
+    res.json(updated)
   } catch (error) {
     console.error(error)
     res.status(500).json({ message: error.message })

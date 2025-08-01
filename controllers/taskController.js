@@ -3,7 +3,7 @@ import Project from '../models/Project.js'
 
 // create a new task to add to project
 export const createTask = async (req, res) => {
-  console.log("==> Incoming request to createTask")
+  console.log('==> Incoming request to createTask')
   try {
     const project = await Project.findById(req.params.projectId)
 
@@ -22,7 +22,7 @@ export const createTask = async (req, res) => {
       description: req.body.description,
       user: req.user._id,
       project: project._id,
-      status: req.body.status || 'To Do',
+      status: req.body.status || 'To Do'
     })
 
     console.log('Created Task', task)
@@ -38,13 +38,7 @@ export const createTask = async (req, res) => {
 // update task information
 export const updateTask = async (req, res) => {
   try {
-    const taskUpdate = await Task.findById(req.params.taskId, {
-      title:req.body.title,
-      description:req.body.description,
-      taskDueDate:req.body.taskDueDate,
-      status: req.body.status,
-      // project: req.body.project,
-    },{new: true}).populate(
+    const taskUpdate = await Task.findById(req.params.taskId).populate(
       'project'
     )
 
@@ -59,6 +53,15 @@ export const updateTask = async (req, res) => {
         message: 'User is not authorized to update tasks on this project'
       })
     }
+
+    taskUpdate.title = req.body.title
+    taskUpdate.description = req.body.description
+    taskUpdate.taskDueDate = req.body.taskDueDate
+    taskUpdate.status = req.body.status
+
+    const updatedTask = await taskUpdate.save()
+
+    res.status(200).json(updatedTask)
   } catch (error) {
     console.error(error)
     res.status(500).json({ message: error.message })
