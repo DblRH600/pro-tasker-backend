@@ -9,7 +9,7 @@ Pro-Tasker is a RESTful API for managing users, projects, and tasks. It uses JWT
 - [Deployment Steps](#deployment-steps)
   - [Requirements](#requirements)
   - [Create Account](#create-account)
-  - [Setup MongoDB](#setup-mongodb)
+  - [Configure MongoDB](#setup-mongodb)
   - [Render Deployment](#render-deployment-process)
   - [Troubling Shooting](#troubling-shooting)
   - [Additional Notes](#additional-notes)
@@ -59,7 +59,7 @@ This is a capstone project designed to synthesize the skills learned across mult
 
 3. Create Render Acc
 
-### Setup MongoDB
+### Configure MongoDB
 
 1. Create a free cluster on MongoDB Atlas
 2. Create a database user and get your connection string
