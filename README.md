@@ -119,30 +119,31 @@ npm run dev
 ## Directory
 
 ```
-pro-tasker
-  backend
-    config
-      connection.js
-    controllers
-      projectController.js
-      taskController.js
-      userController.js
-    middleware
-      adminOnly.js
-    models
-      Project.js
-      Task.js
-      User.js
-    routes
-      projects.js
-      tasks.js
-      users.js
-    utils
-      auth.js
-    .env
-    .gitignore
-    package.json
-    server.js
+.
+└── pro-tasker/
+    └── backend/
+        ├── config/
+        │   └── connection.js
+        ├── controllers/
+        │   ├── projectController.js
+        │   ├── taskController.js
+        │   └── userController.js
+        ├── middleware/
+        │   └── adminOnly.js
+        ├── models/
+        │   ├── Project.js
+        │   ├── Task.js
+        │   └── User.js
+        ├── routes/
+        │   ├── projects.js
+        │   ├── tasks.js
+        │   └── users.js
+        ├── utils/
+        │   └── auth.js
+        ├── .env
+        ├── .gitignore
+        ├── package.json
+        └── server.js
 ```
 
 ## Features
