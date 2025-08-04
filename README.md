@@ -119,8 +119,7 @@ npm run dev
 ## Directory
 
 ```
-.
-└── pro-tasker/
+pro-tasker/
     └── backend/
         ├── config/
         │   └── connection.js
