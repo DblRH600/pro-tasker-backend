@@ -1,16 +1,12 @@
 # Mod18 CAPSTONE Project: Pro-Tasker Backend Development
 
-This is a solution using Express, MongoDB, Mongoose, bcryot, jsonwebtoken, and dotenv to build out [Module 14 SBA](https://ps-lms.vercel.app/curriculum/se/419).
-
-TaskMaster is a RESTful API for managing users, projects, and tasks. It uses JWT-based authentication and enforces ownership-based authorization to ensure data privacy and integrity.
+Pro-Tasker is a RESTful API for managing users, projects, and tasks. It uses JWT-based authentication and enforces ownership-based authorization to ensure data privacy and integrity.
 
 ## Table of contents
 
 - [Overview](#overview)
-  - [Key Concepts](#key-concepts)
-  - [Screenshot](#screenshot)
   - [Links](#links)
-- [My process](#my-process)
+- [Deployment Steps](#deployment-steps)
   - [Built with](#built-with)
   - [What I learned](#what-i-learned)
   - [Continued development](#continued-development)
@@ -20,44 +16,17 @@ TaskMaster is a RESTful API for managing users, projects, and tasks. It uses JWT
 
 ## Overview
 
-This is a capstone project designed to synthesize the skills learned across multiple modules. It is designed to plan and execute the development of a real-world, secure, and functional RESTful API from the ground up. Success will require careful planning, clean code, and a solid understanding of authentication and authorization principles.
-
-This project emphasizes the DRY (Don’t Repeat Yourself) principle. You are strongly encouraged to reference, reuse, and adapt the code and patterns you have developed in the labs and lessons from previous modules.
-
-### Key Concepts
-
-- Client-Server Separation: The frontend and backend operate independently. Clients interact with the server via clearly defined endpoints (URIs).
-
-- Stateless Requests: Each request includes all necessary information. The server does not remember previous interactions.
-
-- Uniform Interface:
-
-  - Resource-Based URLs: Use nouns to represent resources (e.g., /api/products).
-
-  - HTTP Methods (Full CRUD Implementation):
-
-    - GET: Retrieve data
-    - POST: Create new data
-    - PUT / PATCH: Update data
-    - DELETE: Remove data
-    - QUERY: Search and Filter data based on search criteria
-
-  - Standard Format: Data is exchanged in JSON.
-
-- Authentication and Authorization
-
-Understanding these REST principles is essential before working with or extending this API.
+This is a capstone project designed to synthesize the skills learned across multiple **Per Scholas** _Software Engineer_ modules. It is designed to plan and execute the development of a real-world, secure, and functional RESTful API from the ground up. Success will require careful planning, clean code, and a solid understanding of authentication and authorization principles.
 
 ### Links
 
-- Solution URL: [GitHub: taskmaster-api](https://github.com/DblRH600/taskmaster-api)
-- Live Site URL: [Render: taskmaster-api](https://taskmaster-api-h91d.onrender.com)
+- Solution URL: [GitHub: ProTasker Frontend](https://github.com/DblRH600/pro-tasker-frontend/tree/main/src)
+- Live Site URL: [Pro Tasker](https://protaskmanaging.netlify.app/)
 
-## My process
+## Deployment Steps
 
-### Built with
+### Requirements
 
-- NPM
 - Node.js
 - Express
 - DOTENV
@@ -65,106 +34,79 @@ Understanding these REST principles is essential before working with or extendin
 - Mongoose
 - JSONWEBTOKEN
 - BCRYPT
+- Git
+- GitHub Acc
+- Render Acc
 
-### What I learned
+### Create Account (if necessary)
 
-Building the _TaskMaster-API_ tested my understanding of **_Express_**, **_Mongoose_**, and how to set up the **_Project Structure & Configuration_** correctly. Additionally, the project further tested my understanding of how to setup **_express.Router()_** routes as well as futher practice with utilizing **try** / **catch** blocks for **error** handling using **_async_** / **_await_** functions and implementing full **CRUD** functions.
+1. Create a GitHub Acc
+   1 - Create a Repopository (Repo)
 
-```js Project Schema
-import mongoose, { Schema } from "mongoose";
+2. Create a MongoDB Acc
 
-const projectSchema = new Schema({
-  name: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-  description: {
-    type: String,
-    required: true,
-  },
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
-  tasks: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Task",
-    },
-  ],
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-});
+3. Create Render Acc
 
-const Project = mongoose.model("Project", projectSchema);
+### Setup MongoDB
 
-export default Project;
+1. Create a free cluster on MongoDB Atlas
+2. Create a database user and get your connection string
+3. Add your IP address to the network access list (or allow all IPs)
+4. Update the database name in the connection string
+
+5. Prepare the Application
+
+```
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
 ```
 
-```js projects route
-import express from 'express'
-import { authMiddleware as protect } from '../utils/auth.js'
-import Project from '../models/Project.js'
+### Render Deployment Process
 
-const router = express.Router()
-router.use(protect)
+1. Log in to Render Dashboard
+2. Click the "New +" icon and select "Web Services"
+3. Connect the GitHub Repo
+4. Configure Service:
+   Name: Repo-Name
+   Environment: Node
+   Build Command: npm install && npm run build
+   Start Command: npm start
+   Plan: Free
+   Add Environment Variables:
 
-/**
- * POST api/projects
- * @description route for project creation
- */
-router.post('/', async (req, res) => {
-  try {
-    const project = await Project.create({
-      ...req.body,
-      user: req.user._id
-    })
-    res.status(201).json(project)
-  } catch (err) {
-    console.error(err)
-    res.status(400).json({ message: err.message })
-  }
-})
+   MONGODB_URI: Your MongoDB connection string
+   JWT_SECRET: Your JWT secret key
 
-/**
- * PUT api/projects/:id
- * @description route for updating project data
- */
-router.put('/:id', async (req, res) => {
-  try {
-    const projectUpdate = await Project.findById(req.params.id)
+5. Optional Settings & debugging tips:
 
-    if (!projectUpdate) {
-      return res
-        .status(404)
-        .json({ message: 'Project not found under this id' })
-    }
+     - Wait for the initial deploy to complete
+     - Click on the generated domain URL
+     - Test all features of your application
+    
+    ### Troubleshooting
+     - Check Render logs for deployment errors
+     - Ensure all environment variables are set correctly
+     - Verify MongoDB connection string is correct
+     - Check if the build process completes successfully
+    
+    ### Additional Notes
+     - Free tier may sleep after 15 minutes of inactivity
+     - Configure health check endpoint if needed
+     - CORS settings should include Render domain
+     - Keep sensitive data in environment variables
 
-    if (!projectUpdate.user.equals(req.user._id)) {
-      return res
-        .status(403)
-        .json({ message: 'Updates to this project are authorized by the user' })
-    }
-
-    await projectUpdate.set(req.body).save()
-
-    res.json(projectUpdate)
-  } catch (err) {
-    console.error(err)
-    res.status(500).json({ message: err.message })
-  }
-})
+### Local Development
+```
+npm install
+npm run dev
 ```
 
-### Continued development
-
-There is still a _well_ of _informaiton_ to learn and _apply_ regarding the use of **Express**, **MongoDB**, **Mongoose**, **JSON WEB Token** and the many functions and performances that can be used in setting up a **server**. Gaining a deeper understanding of full **CRUD** implementation will help with the next phases of **_Full-Stack_** Development; establishing the **Front-End** to **Server** to **DataBase** connection.
-
-### Reflections
+## Directory
+```
+pro-tasker/
+|-backend/
+| |-config
+```
 
 ### Useful resources
 
